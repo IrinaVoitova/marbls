@@ -16,6 +16,14 @@
 
     return function foo() {
       const foo2 = () => {
+        const foo5 = (x) => {
+          const question = confirm('Ты хочешь завершить игру?');
+          if (question !== true) {
+            return x();
+          } else {
+            return;
+          }
+        };
         const foo11 = () => {
           const startOver = confirm('Сыграем еще разок?');
           if (startOver === true) {
@@ -23,12 +31,12 @@
               userBall: 5,
               botBall: 5,
             };
-            foo();
+            return foo();
           } else {
             return;
           }
         };
-
+        let foo10;
         const foo3 = () => {
           if (result.userBall < 1) {
             alert(`Ты проиграл в нашей игре`);
@@ -38,16 +46,16 @@
             alert(`Ты выиграл в нашей игре`);
             return foo11();
           } else {
-            foo10();
+            return foo10();
           }
         };
         const foo4 = () => {
           let botMove;
           if (botMove === 'undefined') {
-            foo3();
+            return foo3();
           }
           if (result.botBall < 1) {
-            foo3();
+            return foo3();
           }
           const botBallVariable = [...Array(result.botBall)].map((x, i) => i + 1);
           console.log(botBallVariable);
@@ -59,12 +67,12 @@
           то я заберу это количество шариков у тебя!
           Введи ответ: четное/нечетное.`, '');
           if (botMystery === null) {
-            return;
+            return foo5(foo4);
           }
           if (botMystery !== 'четное' && botMystery !== 'нечетное') {
             alert(`Введен неверный ответ!
             Введи ответ: четное/нечетное.`);
-            foo4();
+            return foo4();
           }
           if (botMystery === 'четное' && botMove % 2 === 0 ||
           botMystery === 'нечетное' && botMove % 2 !== 0) {
@@ -75,9 +83,9 @@
             Твой ответ: ${botMystery}
             Ответ компьютера: ${botMove}`);
             if (result.botBall < 1) {
-              foo3();
+              return foo3();
             } else {
-              foo10();
+              return foo10();
             }
           } else {
             result.userBall -= botMove;
@@ -87,24 +95,24 @@
             Твой ответ: ${botMystery}
             Ответ компьютера: ${botMove}`);
             if (result.userBall < 1) {
-              foo3();
+              return foo3();
             } else {
-              foo10();
+              return foo10();
             }
           }
         };
-        var foo10 = () => {
+        foo10 = () => {
           botAnswer(variable);
           console.log(randomAnswer);
           const userMystery = prompt(`
           Введи количество шариков, на которые ты играешь.
           От 1 до ${result.userBall}!`, '');
           if (userMystery === null) {
-            return;
+            return foo5(foo10);
           }
           if (userMystery < 1 || userMystery > result.userBall || isNaN(userMystery)) {
             alert(`Введено неверное количество шариков`);
-            foo10();
+            return foo10();
           }
           if (userMystery >= 1 && userMystery <= result.userBall) {
             if (randomAnswer === 'четное' && userMystery % 2 === 0 ||
@@ -117,9 +125,9 @@
                 Твой ответ: ${userMystery}
                 Ответ компьютера: ${randomAnswer}`);
               if (result.userBall < 1) {
-                foo3();
+                return foo3();
               } else {
-                foo4();
+                return foo4();
               }
             } else {
               result.userBall += (userMystery * 1);
@@ -130,9 +138,9 @@
                 Твой ответ: ${userMystery}
                 Ответ компьютера: ${randomAnswer}`);
               if (result.botBall < 1) {
-                foo3();
+                return foo3();
               } else {
-                foo4();
+                return foo4();
               }
             }
           }
@@ -166,25 +174,17 @@
       Компьютер: ${comp}
       Пользователь: ${user}
       Ты выиграл. Первый ход твой!`);
-                foo10();
+                return foo10();
               } else {
                 alert(`
       Компьютер: ${comp}
       Пользователь: ${user}
       Первым будет ходить компьютер!`);
-                foo4();
-              }
-            };
-            const foo5 = () => {
-              const question = confirm('Ты хочешь завершить игру?');
-              if (question !== true) {
-                game();
-              } else {
-                return;
+                return foo4();
               }
             };
             if (user === null) {
-              return foo5();
+              return foo5(game);
             }
             const userAnswer = user.toLowerCase();
             if (userAnswer === '') {
